@@ -31,7 +31,12 @@ C:\WINDOWS\system32>vagrant -v
 Vagrant 2.2.19
 ```
 - Ansible  
-
+```
+yuriy@k55vd ~
+$  ansible --version
+ansible 2.8.4
+  config file = /etc/ansible/ansible.cfg
+```
 *Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.*
 
 ## Задача 4 (*)
@@ -43,3 +48,27 @@ Vagrant 2.2.19
 ```
 docker ps
 ```
+
+К сожалению выполнить это задание не удалось.
+Старт vagrant зависает на этапе ssh
+У меня win 10. Установил virtualbox, в ней поднял ubuntu 18.04 server, в ubuntu установил virtualbox+vagrant+ansible. При попытке запустить “vagrant up” прогресс зависает на этапе настройки ssh. В чате telegram видел похожие проблемы у ребят, но решения не увидел.
+
+При установке через cygwin ошибка: c:\HashiCorp\Vagrant\VM>vagrant provision
+==> server1.netology: Running provisioner: ansible…
+Windows is not officially supported for the Ansible Control Machine.
+Please check docs.ansible.com...quirements
+Vagrant gathered an unknown Ansible version:
+
+and falls back on the compatibility mode ‘1.8’.
+
+Alternatively, the compatibility mode can be specified in your Vagrantfile:
+www.vagrantup.com...ility_mode
+server1.netology: Running ansible-playbook…
+The Ansible software could not be found! Please verify
+that Ansible is correctly installed on your host system.
+
+Т.е ansible система не видит. Конфиг менял, в строке  поправил
+```Vagrant.configure(2) do |config|
+  config.vm.synced_folder "C:/cygwin64/etc/ansible", "/vagrant", type: "smb", disabled: false, smb_password: "password", smb_username: "username"
+  ```
+  Ошибка та же
